@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>CV Cepat AI — Buat CV Profesional ATS dalam 3 Menit</title>
+<meta name="description" content="Buat CV profesional ATS dengan AI. Mobile friendly, 6 template premium, autosave, dan siap download PDF.">
+<meta name="theme-color" content="#111111">
+<meta property="og:title" content="CV Cepat AI — Buat CV Profesional ATS">
+<meta property="og:description" content="Isi singkat, AI rapihkan jadi CV premium siap kirim HRD.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --bg:#e8e4dd;--panel:#fff;--ink:#171717;--muted:#666;--line:#d8d1c6;--gold:#9a7233;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Inter,Arial,sans-serif;color:var(--ink)}
+.app{display:grid;grid-template-columns:430px 1fr;gap:18px;padding:14px;min-height:100vh}
+.panel{background:#fff;border-radius:24px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.12);height:calc(100vh - 28px);overflow:auto}
+h2{margin:0 0 4px;font-size:20px;letter-spacing:.5px}
+.small{font-size:12px;color:#777;line-height:1.5;margin-bottom:16px}
+.step{display:block}
+.grp{margin:18px 0 8px;font-size:11px;letter-spacing:2px;color:#777;font-weight:900;border-bottom:1px solid var(--line);padding-bottom:8px;text-transform:uppercase}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;font-size:11px;font-weight:800;letter-spacing:.7px;color:#555;text-transform:uppercase;margin:10px 0 6px}
+input,select,textarea{width:100%;border:1px solid #d8d2c8;border-radius:10px;padding:11px 12px;font:14px Inter;background:#fff;outline:none}
+textarea{min-height:78px;resize:vertical;line-height:1.5}
+button{font-family:Inter;cursor:pointer}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:sticky;bottom:-20px;background:#fff;padding:14px 0 0;margin-top:12px;z-index:8}
+.btn{border:0;border-radius:14px;padding:13px 12px;font-weight:900;background:#111;color:#fff}
+.btn.light{background:#f4f1eb;color:#111;border:1px solid #ded7cc}
+.templates{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tbtn{border:1px solid #ddd;border-radius:14px;background:#fff;padding:10px;text-align:left}
+.tbtn.active{border:2px solid #111;background:#f5f1e9}
+.tbtn b{display:block;font-size:12px}
+.tbtn span{font-size:10px;color:#777}
+.previewWrap{height:calc(100vh - 28px);overflow:auto;display:flex;justify-content:center;align-items:flex-start;padding:0 8px}
+.cvShell{width:794px}
+.cv{width:794px;height:1123px;background:#fff;box-shadow:0 18px 60px rgba(0,0,0,.18);position:relative;overflow:hidden;transform-origin:top center}
+.watermark{position:absolute;right:28px;bottom:18px;font-size:8px;letter-spacing:5px;color:#c9c9c9;font-weight:900}
+.sec-title{font-size:12px;letter-spacing:4px;font-weight:900;text-transform:uppercase;margin:0 0 14px}
+.hr{height:1px;background:#bbb;margin:12px 0 16px}
+p{margin:0;line-height:1.55}
+ul{margin:8px 0 0;padding-left:18px}
+li{margin-bottom:5px;line-height:1.45}
+.avatar{background:#ddd;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:900;color:#888}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.contact div,.mini div{font-size:12px;margin-bottom:8px;color:#333}
+.skill-line{display:flex;justify-content:space-between;gap:10px;font-size:12px;margin-bottom:8px}
+.bar{height:6px;background:#ddd;flex:1;margin-top:5px}.fill{height:100%;background:#4b6ea8;width:82%}
+.exp{margin-bottom:18px}.exp-head{display:flex;justify-content:space-between;gap:12px;font-weight:900;font-size:13px}.exp-co{font-size:12px;color:#555;margin:3px 0 6px;font-style:italic}
+.edu{font-size:12px;margin-bottom:12px}.edu b{display:block;font-size:13px}.edu span{display:block;color:#555;margin-top:3px}
+
+
+/* LAUNCH READY UI */
+.saveStatus{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:10px;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#f0fdf4;
+  color:#16803a;
+  font-size:11px;
+  font-weight:800;
+}
+.saveStatus:before{content:"●";font-size:9px}
+.unlockBox{
+  background:#111;
+  color:#fff;
+  border-radius:20px;
+  padding:18px;
+  margin-top:14px;
+}
+.unlockBox b{display:block;font-size:16px;margin-bottom:5px}
+.unlockBox p{font-size:12px;color:#ddd;line-height:1.6;margin-bottom:12px}
+.priceTag{
+  display:inline-block;
+  background:#fff;
+  color:#111;
+  border-radius:999px;
+  padding:7px 12px;
+  font-weight:900;
+  font-size:13px;
+  margin-bottom:10px;
+}
+.btn.pay{
+  background:#16a34a;
+}
+.btn.disabled{
+  opacity:.45;
+  pointer-events:none;
+}
+.freeBadge,.proBadge{
+  position:absolute;
+  left:28px;
+  bottom:18px;
+  z-index:4;
+  font-size:8px;
+  letter-spacing:3px;
+  font-weight:900;
+  color:#b0b0b0;
+}
+.proBadge{color:#16a34a}
+.devNote{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  border-radius:16px;
+  padding:12px;
+  font-size:12px;
+  line-height:1.6;
+  margin-top:12px;
+}
+@media(max-width:900px){
+  .unlockBox{margin-bottom:8px}
+  .saveStatus{margin-bottom:4px}
+}
+
+/* MOBILE NAV */
+.mobileTop,.mobileBottom,.mobilePreviewBtn{display:none}
+.mobileOnly{display:none}
+
+/* 1 ATS CLEAN */
+.atsClean{padding:46px 54px;font-family:Inter}
+.atsClean .name{font-size:34px;font-weight:900;letter-spacing:-1px}
+.atsClean .role{font-size:13px;letter-spacing:3px;color:#555;margin-top:4px;text-transform:uppercase}
+.atsClean .topline{font-size:11px;color:#444;margin-top:14px;padding-bottom:18px;border-bottom:3px solid #111}
+.atsClean .cols{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:20px}
+.atsClean .sec-title{color:#111;border-bottom:1px solid #ccc;padding-bottom:8px}
+
+/* 2 CORPORATE GRAY */
+.corpGray{font-family:Inter;display:grid;grid-template-columns:280px 1fr}
+.corpGray .side{background:#d9d9d9;padding:34px 26px}
+.corpGray .main{padding:34px 34px}
+.corpGray .avatar{width:120px;height:120px;border-radius:2px;margin-bottom:22px}
+.corpGray .name{font-size:32px;font-weight:900;letter-spacing:.5px}
+.corpGray .role{font-size:13px;letter-spacing:2px;color:#555;margin:4px 0 22px;text-transform:uppercase}
+.corpGray .sec-title{border-bottom:2px solid #777;padding-bottom:7px}
+
+/* 3 EXECUTIVE NAVY */
+.execNavy{font-family:DM Sans;display:grid;grid-template-columns:255px 1fr}
+.execNavy .side{background:#13243a;color:#fff;padding:34px 26px}
+.execNavy .main{padding:40px 38px}
+.execNavy .avatar{width:112px;height:112px;border-radius:50%;border:3px solid rgba(255,255,255,.35);margin:0 auto 18px}
+.execNavy .name{font-family:Playfair Display;font-size:32px;font-weight:800;color:#13243a}
+.execNavy .role{font-size:12px;letter-spacing:3px;color:#9a7233;margin:8px 0 22px;text-transform:uppercase}
+.execNavy .side .sec-title,.execNavy .side div{color:#fff}
+.execNavy .side .sec-title{border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:8px}
+.execNavy .main .sec-title{color:#13243a;border-bottom:2px solid #13243a;padding-bottom:8px}
+
+/* 4 MODERN DARK */
+.modernDark{font-family:Space Grotesk;background:#101010;color:#f4f4f4;padding:36px}
+.modernDark:before{content:"";position:absolute;width:260px;height:260px;background:radial-gradient(circle,#386aa8,transparent 65%);filter:blur(20px);left:-80px;top:-80px;opacity:.8}
+.modernDark .hero{display:grid;grid-template-columns:1fr 250px;gap:28px;position:relative;z-index:1}
+.modernDark .avatar{width:220px;height:270px;border-radius:80px 0 0 0;border:1px solid #555}
+.modernDark .name{font-size:54px;letter-spacing:-3px;font-weight:900;margin-top:22px}
+.modernDark .role{font-size:19px;margin-top:20px}
+.modernDark .darkBox{border:1px solid #777;border-radius:18px;padding:22px;margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.modernDark .sec-title{color:#fff}.modernDark li,.modernDark p,.modernDark .edu span,.modernDark .contact div{color:#d5d5d5}
+.modernDark .fill{background:#6aa7ff}
+
+/* 5 CREATIVE PASTEL */
+.creativePastel{font-family:DM Sans;background:#ffd9d4;padding:26px;color:#35507b}
+.creativePastel .inner{height:100%;border:4px solid #466393;border-radius:18px;padding:26px;position:relative;background:linear-gradient(135deg,#ffd7e4,#dff4ff)}
+.creativePastel .top{display:grid;grid-template-columns:170px 1fr;gap:28px;align-items:center}
+.creativePastel .avatar{width:150px;height:150px;border-radius:50%;border:3px solid #466393;background:#f2a6c8}
+.creativePastel .name{font-family:Playfair Display;font-size:42px;line-height:.95;color:#466393;text-shadow:2px 2px #ffcba8}
+.creativePastel .role{display:inline-block;background:#d9ffe4;border:3px solid #466393;padding:5px 12px;margin-top:8px;font-weight:900}
+.creativePastel .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.creativePastel .card{background:rgba(255,255,255,.55);border:3px solid #466393;box-shadow:5px 5px 0 #466393;padding:18px}
+.creativePastel .sec-title{color:#466393;background:#ffd0e3;display:inline-block;padding:3px 10px}
+
+/* 6 MINIMAL ELEGANT */
+.minElegant{font-family:Cormorant Garamond;padding:52px 56px;color:#222}
+.minElegant .head{text-align:center;border-bottom:1px solid #b8a98e;padding-bottom:22px;margin-bottom:26px}
+.minElegant .name{font-size:46px;font-weight:700;letter-spacing:2px}
+.minElegant .role{font-family:Inter;font-size:12px;letter-spacing:5px;color:#9a7233;text-transform:uppercase;margin-top:8px}
+.minElegant .cols{display:grid;grid-template-columns:1.25fr .75fr;gap:36px}
+.minElegant .sec-title{font-family:Inter;color:#9a7233;text-align:center}
+.minElegant p,.minElegant li{font-size:15px}
+.minElegant .exp-head{font-size:16px}
+
+
+/* FIX: Sidebar dark education readability */
+.execNavy .side .edu,
+.execNavy .side .edu b,
+.execNavy .side .edu span,
+.execNavy .side p,
+.execNavy .side .mini div,
+.execNavy .side .contact div{
+  color:#f4f7fb !important;
+}
+.execNavy .side .edu{
+  font-size:13px !important;
+  line-height:1.55;
+}
+.execNavy .side .edu b{
+  font-size:14px !important;
+  font-weight:900;
+  margin-bottom:4px;
+}
+.execNavy .side .edu span{
+  font-size:12px !important;
+  color:#d7e0ec !important;
+  margin-top:4px;
+}
+.execNavy .side .sec-title{
+  color:#ffffff !important;
+  border-bottom:1px solid rgba(255,255,255,.35) !important;
+}
+.execNavy .side .contact div{
+  font-size:13px !important;
+  font-weight:600;
+}
+.execNavy .side .mini div{
+  font-size:13px !important;
+}
+
+/* TEMPLATE PREVIEW REAL CARDS */
+.templatePreviewGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.previewCard{border:1px solid #ddd;border-radius:16px;background:#fff;padding:10px;cursor:pointer}
+.previewCard.active{border:2px solid #111;background:#f5f1e9}
+.previewMini{height:165px;border-radius:10px;overflow:hidden;background:#eee;position:relative;margin-bottom:8px}
+.previewMini .miniCv{width:794px;height:1123px;transform:scale(.148);transform-origin:top left;box-shadow:none}
+.previewCard b{font-size:12px;display:block}
+.previewCard span{font-size:10px;color:#777}
+
+/* MOBILE */
+@media(max-width:900px){
+ body{background:#f4f1eb}
+ .app{display:block;padding:0;min-height:100vh}
+ .panel{height:auto;border-radius:0;box-shadow:none;padding:72px 14px 92px;background:#f4f1eb}
+ .panelHeader{background:#fff;border-radius:24px;padding:20px;margin-bottom:12px;box-shadow:0 10px 28px rgba(0,0,0,.07)}
+ .step{display:none;background:#fff;border-radius:24px;padding:18px;margin-bottom:12px;box-shadow:0 10px 28px rgba(0,0,0,.07)}
+ .step.active{display:block}
+ .mobileTop{display:flex;position:fixed;top:0;left:0;right:0;height:58px;background:rgba(244,241,235,.94);backdrop-filter:blur(10px);z-index:20;align-items:center;gap:10px;padding:10px 14px}
+ .backBtn{width:38px;height:38px;border-radius:12px;border:1px solid #ddd;background:#fff;font-size:18px}
+ .progress{flex:1;height:6px;background:#e5dfd6;border-radius:999px;overflow:hidden}
+ .progressFill{height:100%;background:#111;width:16%;transition:.2s}
+ .stepText{font-size:11px;color:#777;font-weight:800;min-width:50px;text-align:right}
+ .mobileBottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;bottom:0;left:0;right:0;background:rgba(244,241,235,.96);backdrop-filter:blur(10px);padding:12px 14px;z-index:20}
+ .mobileBottom .btn{margin:0}
+ .btns{display:none}
+ .desktopOnly{display:none!important}
+ .mobileOnly{display:block}
+ .grid2{grid-template-columns:1fr}
+ .templates,.templatePreviewGrid{grid-template-columns:1fr}
+ input,select,textarea{font-size:16px;border-radius:14px;padding:14px}
+ label{margin-top:14px}
+ h2{font-size:22px}
+ .small{font-size:13px}
+ .previewWrap{display:none;position:fixed;inset:0;background:#d8d2c9;z-index:50;height:100vh;overflow:auto;padding:70px 12px 24px}
+ .previewWrap.show{display:flex}
+ .cvShell{width:100%;display:flex;justify-content:center}
+ .cv{transform:scale(.46);margin-bottom:-590px}
+ .previewHeader{display:flex;position:fixed;top:0;left:0;right:0;height:58px;background:rgba(244,241,235,.96);backdrop-filter:blur(10px);z-index:55;align-items:center;justify-content:space-between;padding:10px 14px}
+ .previewHeader b{font-size:14px}
+ .previewHeader button{border:1px solid #ddd;background:#fff;border-radius:12px;padding:10px 14px;font-weight:900}
+ .mobilePreviewBtn{display:block;margin-top:10px}
+ .templatePreviewGrid .previewMini{height:210px}
+ .templatePreviewGrid .miniCv{transform:scale(.19)}
+ .grp{margin-top:10px}
+}
+
+@media(max-width:390px){
+ .cv{transform:scale(.42);margin-bottom:-650px}
+ .templatePreviewGrid .miniCv{transform:scale(.165)}
+ .templatePreviewGrid .previewMini{height:188px}
+}
+
+/* GLOBAL FIX V3: semua template aman di mobile preview */
+@media(max-width:900px){
+  .previewWrap{
+    align-items:flex-start !important;
+    justify-content:center !important;
+    padding:72px 0 28px !important;
+    overflow:auto !important;
+  }
+  .cvShell{
+    width:100% !important;
+    display:flex !important;
+    justify-content:center !important;
+    align-items:flex-start !important;
+    min-height:auto !important;
+  }
+  .previewWrap .cv{
+    width:794px !important;
+    height:1123px !important;
+    min-width:794px !important;
+    max-width:794px !important;
+    transform-origin:top center !important;
+    margin:0 !important;
+  }
+  .templatePreviewGrid .previewMini{
+    overflow:hidden !important;
+  }
+  .templatePreviewGrid .miniCv{
+    width:794px !important;
+    height:1123px !important;
+    min-width:794px !important;
+    max-width:794px !important;
+    transform-origin:top left !important;
+  }
+}
+
+/* fix template creative biar ga melebar */
+.creativePastel .name{
+  max-width:360px;
+  word-break:break-word;
+}
+.creativePastel p{
+  word-break:normal;
+  overflow-wrap:break-word;
+}
+.modernDark .name{
+  max-width:720px;
+  word-break:break-word;
+}
+
+</style>
+</head>
+<body>
+
+<div class="mobileTop">
+  <button class="backBtn" onclick="prevStep()">←</button>
+  <div class="progress"><div class="progressFill" id="progressFill"></div></div>
+  <div class="stepText" id="stepText">1/5</div>
+</div>
+
+<div class="app">
+  <div class="panel">
+    <div class="panelHeader">
+      <h2>CV AI Premium</h2>
+      <div class="small">6 template real, preview real, autosave di HP user, export PDF, dan siap nanti disambung Gemini API + Xendit.</div>
+      <div class="saveStatus" id="saveStatus">Draft tersimpan otomatis</div>
+    </div>
+
+    <div class="step active" data-step="1">
+      <div class="grp">Data Diri</div>
+      <div class="grid2">
+        <div><label>Nama</label><input id="name" value="Cahaya Dewi"></div>
+        <div><label>Target Posisi</label><input id="role" value="Marketing Specialist"></div>
+      </div>
+      <div class="grid2">
+        <div><label>Telepon</label><input id="phone" value="+62 812-0000-0000"></div>
+        <div><label>Email</label><input id="email" value="hello@email.com"></div>
+      </div>
+      <label>Domisili</label><input id="city" value="Bandung, Indonesia">
+      <label>Foto</label><input id="photo" type="file" accept="image/*">
+    </div>
+
+    <div class="step" data-step="2">
+      <div class="grp">Pendidikan Dinamis</div>
+      <div class="grid2">
+        <div><label>Jenjang</label><select id="degree" onchange="toggleHigherEdu()"><option>SMA/SMK</option><option>D3</option><option selected>S1</option><option>S2</option></select></div>
+        <div><label>Tahun</label><input id="eduYear" value="2019 - 2023"></div>
+      </div>
+      <div class="grid2">
+        <div><label>Institusi</label><input id="school" value="Borcelle University"></div>
+        <div><label>Jurusan</label><input id="major" value="Ilmu Komunikasi"></div>
+      </div>
+      <div id="higherEdu" class="grid2">
+        <div><label>IPK <span style="color:#999;text-transform:none">(opsional)</span></label><input id="gpa" value="3.99"></div>
+        <div><label>Predikat <span style="color:#999;text-transform:none">(opsional)</span></label><input id="honor" value="Cum Laude"></div>
+        <div style="grid-column:1/3"><label>Skripsi / Thesis <span style="color:#999;text-transform:none">(opsional)</span></label><input id="thesis" value="Strategi komunikasi digital untuk UMKM lokal"></div>
+      </div>
+    </div>
+
+    <div class="step" data-step="3">
+      <div class="grp">Experience / Fresh Graduate Booster</div>
+      <div class="grid2">
+        <div><label>Perusahaan / Organisasi</label><input id="company" value="Borcelle Company"></div>
+        <div><label>Periode</label><input id="period" value="2023 - Sekarang"></div>
+      </div>
+      <label>Detail singkat</label><textarea id="rawExp">Mengelola konten media sosial, campaign digital, membuat laporan performa, bekerja sama dengan tim desain dan sales.</textarea>
+      <div class="grp">Skill & Tambahan</div>
+      <label>Skill</label><input id="skills" value="Digital Marketing, Social Media Strategy, Copywriting, Content Planning, Public Communication">
+      <label>Bahasa</label><input id="langs" value="Indonesia, English">
+      <label>Sertifikasi</label><input id="cert" value="Google Digital Marketing, Microsoft Office Specialist">
+      <label>Profile manual <span style="color:#999;text-transform:none">(kosongkan kalau mau AI)</span></label><textarea id="profile"></textarea>
+    </div>
+
+    <div class="step" data-step="4">
+      <div class="grp">Pilih Template</div>
+      <div class="templatePreviewGrid" id="templatePreviewGrid"></div>
+      <button class="btn light mobilePreviewBtn" onclick="openPreview()">Lihat Preview Full CV</button>
+    </div>
+
+    <div class="step" data-step="5">
+      <div class="grp">Final Preview</div>
+      <div class="small">Preview real template ada di tombol bawah. Kalau sudah cocok, download PDF.</div>
+      <button class="btn light" onclick="openPreview()">Lihat Preview Full CV</button>
+      <div class="unlockBox">
+        <span class="priceTag">PRO Rp15.000</span>
+        <b>Download PDF Premium</b>
+        <p>Versi gratis masih ada watermark. Setelah payment Xendit nanti, PDF no watermark otomatis kebuka.</p>
+        <button class="btn pay" onclick="startPayment()">Bayar & Unlock PDF</button>
+      </div>
+      <button class="btn light" onclick="downloadPDF()">Download Preview Gratis</button>
+      <button class="btn" id="premiumDownloadBtn" onclick="downloadPDF(true)">Download PDF Premium</button>
+      <div class="devNote">Mode dev: klik “Bayar & Unlock PDF” sekarang akan simulasi unlock. Nanti tinggal ganti function <b>startPayment()</b> ke Xendit. Function AI juga sudah rapi di <b>profileText()</b> dan <b>bullets()</b>, nanti tinggal diganti panggil API.</div>
+      <button class="btn light" onclick="clearDraft()">Hapus Draft Tersimpan</button>
+    </div>
+
+    <div class="btns desktopOnly">
+      <button class="btn light" onclick="aiRapihin()">✦ AI Rapihin</button>
+      <button class="btn" onclick="downloadPDF(isPremium())">↓ Download PDF</button>
+    </div>
+  </div>
+
+  <div class="previewWrap" id="previewWrap">
+    <div class="previewHeader mobileOnly">
+      <button onclick="closePreview()">Tutup</button>
+      <b>Preview CV</b>
+      <button onclick="downloadPDF(isPremium())">PDF</button>
+    </div>
+    <div class="cvShell">
+      <div class="cv corpGray" id="cv"></div>
+    </div>
+  </div>
+</div>
+
+<div class="mobileBottom">
+  <button class="btn light" onclick="openPreview()">Preview</button>
+  <button class="btn" id="nextBtn" onclick="nextStep()">Lanjut</button>
+</div>
+
+<script>
+
+const STORAGE_KEY='cv_ai_premium_draft_v1';
+const PREMIUM_KEY='cv_ai_premium_unlocked';
+let template='corpGray', photoData='', step=1, totalSteps=5;
+
+function isPremium(){return localStorage.getItem(PREMIUM_KEY)==='true'}
+function setSaveStatus(text){
+ const s=el('saveStatus');
+ if(s){s.textContent=text}
+}
+function collectData(){
+ return {
+  template, photoData, step,
+  fields:{
+   name:val('name'), role:val('role'), phone:val('phone'), email:val('email'), city:val('city'),
+   degree:val('degree'), eduYear:val('eduYear'), school:val('school'), major:val('major'),
+   gpa:val('gpa'), honor:val('honor'), thesis:val('thesis'),
+   company:val('company'), period:val('period'), rawExp:val('rawExp'),
+   skills:val('skills'), langs:val('langs'), cert:val('cert'), profile:val('profile')
+  }
+ }
+}
+function saveDraft(){
+ try{
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(collectData()));
+  setSaveStatus('Draft tersimpan otomatis');
+ }catch(e){
+  setSaveStatus('Storage penuh, foto mungkin terlalu besar');
+ }
+}
+function loadDraft(){
+ try{
+  const raw=localStorage.getItem(STORAGE_KEY);
+  if(!raw) return;
+  const data=JSON.parse(raw);
+  if(data.template) template=data.template;
+  if(data.photoData) photoData=data.photoData;
+  if(data.fields){
+   Object.entries(data.fields).forEach(([k,v])=>{
+    const input=el(k);
+    if(input && v!==undefined) input.value=v;
+   });
+  }
+ }catch(e){}
+}
+function clearDraft(){
+ if(confirm('Hapus draft CV yang tersimpan di HP/browser ini?')){
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+ }
+}
+function startPayment(){
+ // DEV MODE: nanti ganti bagian ini jadi redirect / create invoice Xendit
+ localStorage.setItem(PREMIUM_KEY,'true');
+ alert('Simulasi sukses: Premium unlocked. Nanti ini diganti callback Xendit.');
+ render();
+}
+
+const templateList=[
+ ['atsClean','ATS Clean','Admin / fresh graduate'],
+ ['corpGray','Corporate Gray','HR / office / marketing'],
+ ['execNavy','Executive Navy','Manager / senior'],
+ ['modernDark','Modern Dark','Tech / designer / socmed'],
+ ['creativePastel','Creative Pastel','Gen Z / creator'],
+ ['minElegant','Minimal Elegant','PR / hospitality / fashion']
+];
+
+function el(id){return document.getElementById(id)}
+function val(id){return el(id)?.value.trim()||''}
+function esc(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function cap(s){return (s||'').replace(/\b\w/g,c=>c.toUpperCase())}
+function arr(id){return val(id).split(',').map(x=>x.trim()).filter(Boolean)}
+
+function updateMobile(){
+ document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+ const target=document.querySelector(`.step[data-step="${step}"]`);
+ if(target) target.classList.add('active');
+ el('progressFill').style.width=(step/totalSteps*100)+'%';
+ el('stepText').textContent=step+'/'+totalSteps;
+ el('nextBtn').textContent=step===totalSteps?'Download PDF':'Lanjut';
+ document.querySelector('.backBtn').style.opacity=step===1?'.35':'1';
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function nextStep(){
+ if(step===totalSteps){downloadPDF();return}
+ step++;
+ updateMobile();
+ saveDraft();
+}
+function prevStep(){
+ if(step>1){step--;updateMobile();saveDraft()}
+}
+function openPreview(){render();el('previewWrap').classList.add('show');setTimeout(fitPreviewScale,30)}
+function closePreview(){el('previewWrap').classList.remove('show')}
+
+function fitPreviewScale(){
+ const wrap=el('previewWrap');
+ const cv=el('cv');
+ const shell=document.querySelector('.cvShell');
+ if(!wrap || !cv || !shell) return;
+ if(window.innerWidth<=900){
+   const available=Math.max(260, window.innerWidth - 28);
+   const scale=Math.min(available/794, .72);
+   cv.style.transform=`scale(${scale})`;
+   shell.style.height=(1123*scale + 24)+'px';
+ }else{
+   cv.style.transform='';
+   shell.style.height='';
+ }
+}
+window.addEventListener('resize', fitPreviewScale);
+
+
+function templateThumb(tpl){
+ const old=template;
+ template=tpl;
+ const cls=tpl;
+ const body=renderHTML(false);
+ template=old;
+ return `<div class="previewCard ${tpl===template?'active':''}" onclick="setTemplate('${tpl}')">
+   <div class="previewMini"><div class="cv ${cls} miniCv">${body}</div></div>
+   <b>${templateList.find(x=>x[0]===tpl)[1]}</b><span>${templateList.find(x=>x[0]===tpl)[2]}</span>
+ </div>`;
+}
+function initButtons(){
+ el('templatePreviewGrid').innerHTML=templateList.map(t=>templateThumb(t[0])).join('');
+}
+function setTemplate(t){template=t;initButtons();render();saveDraft()}
+
+function toggleHigherEdu(){
+ const higher=['D3','S1','S2'].includes(val('degree'));
+ el('higherEdu').style.display=higher?'grid':'none';
+ render();
+}
+function eduHTML(){
+ let degree=val('degree'), major=val('major'), school=val('school'), year=val('eduYear');
+ let line=`${degree} ${major}`;
+ let extra='';
+ if(['D3','S1','S2'].includes(degree)){
+   let gpa=val('gpa'), honor=val('honor'), thesis=val('thesis');
+   if(gpa||honor) extra += `<span>${gpa?'IPK '+esc(gpa):''}${gpa&&honor?' · ':''}${esc(honor)}</span>`;
+   if(thesis) extra += `<span>Skripsi/Thesis: ${esc(thesis)}</span>`;
+ }
+ return `<div class="edu"><b>${esc(line)}</b><span>${esc(school)}</span><span>${esc(year)}</span>${extra}</div>`;
+}
+function profileText(){
+ if(val('profile')) return val('profile');
+ const role=val('role'), skills=arr('skills').slice(0,3).join(', ');
+ return `${cap(role)} dengan kemampuan dalam ${skills || 'komunikasi, administrasi, dan pengelolaan kerja'} serta terbiasa bekerja secara terstruktur, kolaboratif, dan berorientasi hasil. Memiliki pemahaman yang baik terhadap kebutuhan posisi yang dilamar, mampu beradaptasi dengan cepat, serta siap berkontribusi dalam lingkungan kerja profesional.`;
+}
+function bullets(){
+ const role=val('role').toLowerCase(), raw=val('rawExp');
+ if(role.includes('marketing')||role.includes('social')||role.includes('konten')){
+  return ['Merancang dan menjalankan strategi campaign digital untuk meningkatkan awareness brand.',
+  'Mengelola content planning, copywriting, dan publikasi konten sesuai target audience.',
+  'Menganalisis performa campaign dan menyusun laporan insight untuk evaluasi strategi.',
+  'Berkolaborasi dengan tim desain, sales, dan operasional dalam pelaksanaan program pemasaran.'];
+ }
+ if(role.includes('admin')){
+  return ['Mengelola data administrasi dan dokumen perusahaan secara rapi dan terstruktur.',
+  'Membuat laporan harian dan mingguan menggunakan Microsoft Office / Google Workspace.',
+  'Berkoordinasi dengan berbagai divisi untuk memastikan kelancaran operasional.',
+  'Menjaga akurasi input data serta membantu kebutuhan administrasi internal.'];
+ }
+ if(role.includes('design')||role.includes('designer')){
+  return ['Membuat desain visual untuk kebutuhan promosi digital dan materi komunikasi brand.',
+  'Mengembangkan layout, komposisi warna, dan elemen visual sesuai identitas brand.',
+  'Berkolaborasi dengan tim marketing untuk menghasilkan materi kreatif yang relevan.',
+  'Mengelola revisi desain secara cepat dengan tetap menjaga kualitas visual.'];
+ }
+ return raw ? raw.split(',').map(x=>x.trim()).filter(Boolean).slice(0,4).map(x=>'Mengelola '+x.toLowerCase()+'.') : [
+  'Menyelesaikan pekerjaan sesuai target dan standar operasional perusahaan.',
+  'Berkoordinasi dengan tim untuk memastikan proses kerja berjalan efektif.',
+  'Membuat laporan dan dokumentasi pekerjaan secara rapi.',
+  'Beradaptasi dengan kebutuhan kerja serta mendukung pencapaian target divisi.'
+ ];
+}
+function skillHTML(simple=false){
+ return arr('skills').slice(0,7).map(s=> simple?`<div class="skill-line"><span>${esc(s)}</span><div class="bar"><div class="fill"></div></div></div>`:`<div>• ${esc(s)}</div>`).join('');
+}
+function contactHTML(){return `<div class="contact"><div>${esc(val('phone'))}</div><div>${esc(val('email'))}</div><div>${esc(val('city'))}</div></div>`}
+function avatarHTML(cls=''){return `<div class="avatar ${cls}">${photoData?`<img src="${photoData}">`:'PHOTO'}</div>`}
+function expHTML(){
+ return `<div class="exp"><div class="exp-head"><span>${esc(val('role'))}</span><span>${esc(val('period'))}</span></div><div class="exp-co">${esc(val('company'))}</div><ul>${bullets().map(b=>`<li>${esc(b)}</li>`).join('')}</ul></div>`;
+}
+function achHTML(){return `<div class="exp"><div class="exp-head"><span>Academic / Project Achievement</span></div><p>Mengembangkan project dan aktivitas yang relevan dengan target posisi, termasuk riset, perencanaan, koordinasi, dan eksekusi program secara terukur.</p></div><div class="exp"><div class="exp-head"><span>Team Collaboration</span></div><p>Terbiasa bekerja dalam tim, mengikuti deadline, dan berkomunikasi aktif untuk menyelesaikan pekerjaan secara efektif.</p></div>`}
+function sideCommon(){return `${avatarHTML()}<div class="sec-title">Kontak</div>${contactHTML()}<div class="sec-title" style="margin-top:26px">Pendidikan</div>${eduHTML()}<div class="sec-title" style="margin-top:26px">Keahlian</div>${skillHTML()}<div class="sec-title" style="margin-top:26px">Bahasa</div><div class="mini">${arr('langs').map(l=>`<div>${esc(l)}</div>`).join('')}</div>`}
+function mainCommon(){return `<div class="name">${esc(val('name'))}</div><div class="role">${esc(val('role'))}</div><div class="sec-title">Profil</div><p>${esc(profileText())}</p><div class="sec-title" style="margin-top:26px">Pengalaman Kerja</div>${expHTML()}<div class="sec-title" style="margin-top:26px">Key Achievements</div>${achHTML()}<div class="sec-title" style="margin-top:26px">Certification</div><p>${esc(val('cert'))}</p>`}
+
+function renderHTML(withWatermark=true){
+ let wm=withWatermark && !isPremium()?'<div class="watermark">CV AI PREMIUM</div><div class="freeBadge">FREE PREVIEW</div>':(withWatermark?'<div class="proBadge">PREMIUM PDF</div>':'');
+ if(template==='atsClean'){
+  return `<div class="name">${esc(val('name'))}</div><div class="role">${esc(val('role'))}</div><div class="topline">${esc(val('phone'))} | ${esc(val('email'))} | ${esc(val('city'))}</div><div class="sec-title" style="margin-top:22px">Profile Statement</div><p>${esc(profileText())}</p><div class="cols"><div><div class="sec-title">Work Experience</div>${expHTML()}<div class="sec-title">Key Achievements</div>${achHTML()}</div><div><div class="sec-title">Education</div>${eduHTML()}<div class="sec-title">Expertise</div>${skillHTML()}<div class="sec-title">Language</div><p>${esc(arr('langs').join(', '))}</p><div class="sec-title" style="margin-top:24px">Certification</div><p>${esc(val('cert'))}</p></div></div>${wm}`;
+ }
+ if(template==='corpGray'){
+  return `<div class="side">${sideCommon()}<div class="sec-title" style="margin-top:26px">Sertifikasi</div><p>${esc(val('cert'))}</p></div><div class="main">${mainCommon()}</div>${wm}`;
+ }
+ if(template==='execNavy'){
+  return `<div class="side">${sideCommon()}</div><div class="main">${mainCommon()}</div>${wm}`;
+ }
+ if(template==='modernDark'){
+  return `<div class="hero"><div><div class="contact">${contactHTML()}</div><div class="role">${esc(val('role'))}</div><p style="max-width:310px;margin-top:12px">${esc(profileText())}</p></div>${avatarHTML()}</div><div class="name">${esc(val('name'))}</div><div class="darkBox"><div><div class="sec-title">Pendidikan</div>${eduHTML()}</div><div><div class="sec-title">Pengalaman</div>${expHTML()}</div></div><div style="margin-top:26px"><div class="sec-title">Keahlian</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">${skillHTML(true)}</div></div>${wm}`;
+ }
+ if(template==='creativePastel'){
+  return `<div class="inner"><div class="top">${avatarHTML()}<div><div class="name">${esc(val('name'))}</div><div class="role">${esc(val('role'))}</div><p style="margin-top:12px">${esc(profileText())}</p></div></div><div class="cards"><div class="card"><div class="sec-title">Kemampuan</div>${skillHTML(true)}</div><div class="card"><div class="sec-title">Pendidikan</div>${eduHTML()}</div><div class="card" style="grid-column:1/3"><div class="sec-title">Pengalaman</div>${expHTML()}</div><div class="card"><div class="sec-title">Bahasa</div><p>${esc(arr('langs').join(', '))}</p></div><div class="card"><div class="sec-title">Kontak</div>${contactHTML()}</div></div></div>${wm}`;
+ }
+ if(template==='minElegant'){
+  return `<div class="head"><div class="name">${esc(val('name'))}</div><div class="role">${esc(val('role'))}</div><p style="font-family:Inter;font-size:12px;margin-top:12px">${esc(val('phone'))} · ${esc(val('email'))} · ${esc(val('city'))}</p></div><div class="cols"><div><div class="sec-title">Profile Statement</div><p>${esc(profileText())}</p><div class="sec-title" style="margin-top:26px">Work Experience</div>${expHTML()}<div class="sec-title" style="margin-top:26px">Key Achievements</div>${achHTML()}</div><div><div class="sec-title">Education</div>${eduHTML()}<div class="sec-title" style="margin-top:24px">Expertise</div>${skillHTML()}<div class="sec-title" style="margin-top:24px">Language</div><p>${esc(arr('langs').join(', '))}</p><div class="sec-title" style="margin-top:24px">Certification</div><p>${esc(val('cert'))}</p></div></div>${wm}`;
+ }
+ return '';
+}
+function render(){
+ const cv=el('cv'); cv.className='cv '+template; cv.innerHTML=renderHTML(true); setTimeout(fitPreviewScale,20);
+}
+function aiRapihin(){
+ if(!val('profile')) el('profile').value = profileText();
+ render();
+}
+function downloadPDF(premium=false){
+ if(premium && !isPremium()){startPayment(); return;}
+ render();
+
+ const exportNode=document.createElement('div');
+ exportNode.className='cv '+template;
+ exportNode.innerHTML=renderHTML(true);
+ exportNode.style.position='fixed';
+ exportNode.style.left='-99999px';
+ exportNode.style.top='0';
+ exportNode.style.width='794px';
+ exportNode.style.height='1123px';
+ exportNode.style.minWidth='794px';
+ exportNode.style.maxWidth='794px';
+ exportNode.style.transform='none';
+ exportNode.style.margin='0';
+ exportNode.style.boxShadow='none';
+ exportNode.style.zIndex='-1';
+ document.body.appendChild(exportNode);
+
+ setTimeout(()=>{
+  html2canvas(exportNode,{
+    scale:2,
+    useCORS:true,
+    backgroundColor:'#ffffff',
+    windowWidth:794,
+    windowHeight:1123,
+    scrollX:0,
+    scrollY:0
+  }).then(canvas=>{
+   const img=canvas.toDataURL('image/jpeg',0.98);
+   const {jsPDF}=window.jspdf;
+   const pdf=new jsPDF('p','mm','a4');
+   pdf.addImage(img,'JPEG',0,0,210,297);
+   pdf.save((val('name')||'CV')+' - CV AI Premium.pdf');
+   exportNode.remove();
+  }).catch(err=>{
+   exportNode.remove();
+   alert('Gagal download PDF, coba lagi.');
+   console.error(err);
+  });
+ },100);
+}
+
+document.querySelectorAll('input,textarea,select').forEach(x=>x.addEventListener('input',()=>{render();initButtons();saveDraft()}));
+el('photo').addEventListener('change',e=>{
+ const file=e.target.files[0]; if(!file)return;
+ const r=new FileReader(); r.onload=()=>{photoData=r.result;render();initButtons();saveDraft()}; r.readAsDataURL(file);
+});
+loadDraft();initButtons();toggleHigherEdu();render();updateMobile();fitPreviewScale();fitPreviewScale();saveDraft();
+</script>
+</body>
+</html>
